@@ -59,18 +59,65 @@ Difficulty : Medium +
 */
 #include <stdlib.h>
 #include <stdio.h>
-
+int count = 0, count1 = 0;
+int flag=1;
 struct node_dll{
 	int data;
 	struct node_dll *next;
 	struct node_dll *prev;
-};
+}*head;
 struct node{
 	int data;
 	struct node *left;
 	struct node *right;
 };
 
+int find_len(struct node_dll *head)
+{
+	if (head != NULL)
+		count++;
+		find_len(head->next);
+	
+		return count;
+}
+int find1_len(struct node *root)
+{
+	if (root != NULL)
+		count1++;
+	if (root->left != NULL)
+		find1_len(root->left);
+	if (root->right!= NULL)
+		find1_len(root->right);
+	return count1;
+}
+void inorder(struct node_dll *head, struct node *root)
+{
+	if (root != NULL )
+	{
+
+		inorder(head->next, root->left);
+		if (root->data != head->data)
+			flag = 0;
+		inorder(head->next, root->right);
+	}
+
+	
+}
 int is_identical(struct node_dll *head, struct node *root){
+	int l,l1;
+	if (head==NULL || root==NULL)
 	return -1;
+	l = find_len(head);
+	l1 = find1_len(root);
+	if (l != l1)
+		return 0;
+	inorder(head,root);
+	if (flag == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }

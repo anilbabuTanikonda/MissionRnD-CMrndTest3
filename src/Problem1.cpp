@@ -43,14 +43,46 @@ Difficulty : Easy
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
+int flag1;
 struct node{
 	int data;
 	struct node *left;
 	struct node *right;
 };
 
+int search(struct node *head,int val)
+{
+	if (head == NULL)
+		return 0;
+	if (head->data == val)
+	{	
+		return 0;
 
-int get_missing_value(struct node *root,int n){
-    return -1;
+	}
+	
+	search(head->left, val);
+	search(head->right, val);
+	return val;
+}
+int get_missing_value(struct node *root, int n){
+	int i;
+	if (root == NULL || n<-10000 || n>10000)
+	{
+		return -1;
+	}
+	for (i = 0; i <=n; i++)
+	{
+		flag1=search(root,i);
+		if (flag1!=0)
+		{
+			break;
+
+			
+		}
+
+
+	}
+	
+	return i;
+	
 }
